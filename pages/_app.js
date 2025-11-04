@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import "../styles/globals.css";
+import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -13,21 +14,64 @@ function MyApp({ Component, pageProps }) {
 
     if (router.pathname === "/") {
       if (member) {
-        router.replace("/member-home"); // Member dashboard
+        router.replace("/member-home");
       } else if (!user && !hasAccount) {
-        router.replace("/register"); // First-time visitor
+        router.replace("/register");
       } else if (!user) {
-        router.replace("/login"); // Default → login
+        router.replace("/login");
       }
-      // If user exists and homepage, do nothing
     }
 
     setReady(true);
   }, [router]);
 
-  if (!ready) return null; // Prevent hydration flash
+  if (!ready) return null;
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      {/* Neon-Glowing Toasts on top-left */}
+      <Toaster
+        position="top-left"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: "rgba(20, 20, 50, 0.95)",
+            color: "#fff",
+            borderRadius: "12px",
+            padding: "12px 20px",
+            fontWeight: "bold",
+            fontFamily: "Arial, sans-serif",
+            boxShadow: "0 0 10px #a855f7, 0 0 20px #3b82f6, 0 0 30px #f472b6",
+            border: "1px solid #a855f7",
+            transform: "translateX(-100%)",
+            animation: "slideInLeft 0.5s forwards",
+          },
+          success: {
+            iconTheme: { primary: "#a855f7", secondary: "#fff" },
+          },
+          error: {
+            iconTheme: { primary: "#f43f5e", secondary: "#fff" },
+          },
+        }}
+      />
+
+      <Component {...pageProps} />
+
+      {/* CSS animation for slide-in */}
+      <style jsx global>{`
+        @keyframes slideInLeft {
+          0% {
+            transform: translateX(-120%);
+            opacity: 0;
+          }
+          100% {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
+    </>
+  );
 }
 
 export default MyApp;

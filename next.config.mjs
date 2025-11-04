@@ -32,6 +32,14 @@ const nextConfig = {
         destination:
           "https://society-admin-eosin.vercel.app/api/announcements/get",
       },
+      {
+        source: "/api/complaints/add",
+        destination: "http://10.147.230.17:3000/api/complaints/add",
+      },
+      {
+        source: "/api/guest-visit",
+        destination: "http://10.147.230.17:3000/api/guest-visit",
+      },
     ];
   },
 };

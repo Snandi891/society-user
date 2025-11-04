@@ -49,7 +49,7 @@ export default function Register() {
       guest: true,
     };
     localStorage.setItem("user", JSON.stringify(guestUser));
-    router.push("/"); // ✅ homepage
+    router.push("/guet"); // ✅ homepage
   };
 
   return (
